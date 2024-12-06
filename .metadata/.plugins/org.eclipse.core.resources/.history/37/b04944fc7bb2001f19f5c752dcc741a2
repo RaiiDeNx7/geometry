@@ -1,0 +1,30 @@
+package geometry;
+
+public static Geometry2D create2DGeometry(String type, Scanner scanner) {
+    switch (type) {
+        case "circle":
+            System.out.println("Enter radius: ");
+            double radius = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+            return new Circle(radius);
+
+        case "rectangle":
+            System.out.println("Enter length and width: ");
+            double length = scanner.nextDouble();
+            double width = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+            return new Rectangle(length, width);
+
+        case "triangle":
+            System.out.println("Enter base, height, and side lengths: ");
+            double base = scanner.nextDouble();
+            double height = scanner.nextDouble();
+            double x = scanner.nextDouble();
+            double y = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+            return new Triangle(base, height, x, y);
+
+        default:
+            return null;
+    }
+}

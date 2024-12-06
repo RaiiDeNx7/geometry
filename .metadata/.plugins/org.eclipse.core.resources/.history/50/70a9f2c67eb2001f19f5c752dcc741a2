@@ -1,0 +1,189 @@
+package geometry;
+import java.util.Scanner;
+
+
+public class Main {
+
+    public static void main(String[] args) {
+        LinkedList<Geometry2D> geometry2DList = new LinkedList<>();
+        LinkedList<Geometry3D> geometry3DList = new LinkedList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Choose an action: [add2D, add3D, remove2D, remove3D, find2D, find3D, list, exit]");
+            String action = scanner.nextLine().trim();
+
+            switch (action.toLowerCase()) {
+                case "add2d":
+                    System.out.println("Enter 2D geometry type (circle, rectangle, triangle): ");
+                    String type2D = scanner.nextLine();
+                    Geometry2D geometry2D = create2DGeometry(type2D, scanner);
+                    if (geometry2D != null) {
+                        geometry2DList.add(geometry2D);
+                        System.out.println("2D geometry added.");
+                    }
+                    break;
+
+                case "add3d":
+                    System.out.println("Enter 3D geometry type (rectangularprism, sphere, triangularprism): ");
+                    String type3D = scanner.nextLine();
+                    Geometry3D geometry3D = create3DGeometry(type3D, scanner);
+                    if (geometry3D != null) {
+                        geometry3DList.add(geometry3D);
+                        System.out.println("3D geometry added.");
+                    }
+                    break;
+
+                case "remove2d":
+                    System.out.println("Enter 2D geometry type to remove (circle, rectangle, triangle): ");
+                    String removeType2D = scanner.nextLine();
+                    if (removeGeometry(geometry2DList, removeType2D, scanner)) {
+                        System.out.println("2D geometry removed.");
+                    } else {
+                        System.out.println("Geometry not found.");
+                    }
+                    break;
+
+                case "remove3d":
+                    System.out.println("Enter 3D geometry type to remove (rectangularprism, sphere, triangularprism): ");
+                    String removeType3D = scanner.nextLine();
+                    if (removeGeometry(geometry3DList, removeType3D, scanner)) {
+                        System.out.println("3D geometry removed.");
+                    } else {
+                        System.out.println("Geometry not found.");
+                    }
+                    break;
+
+                case "find2d":
+                    System.out.println("Enter 2D geometry type to find (circle, rectangle, triangle): ");
+                    String findType2D = scanner.nextLine();
+                    if (!findGeometry(geometry2DList, findType2D, scanner)) {
+                        System.out.println("Geometry not found.");
+                    }
+                    break;
+
+                case "find3d":
+                    System.out.println("Enter 3D geometry type to find (rectangularprism, sphere, triangularprism): ");
+                    String findType3D = scanner.nextLine();
+                    if (!findGeometry(geometry3DList, findType3D, scanner)) {
+                        System.out.println("Geometry not found.");
+                    }
+                    break;
+
+                case "list":
+                    System.out.println("2D Geometries:");
+                    geometry2DList.printList();
+                    System.out.println("3D Geometries:");
+                    geometry3DList.printList();
+                    break;
+
+                case "exit":
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid action. Please try again.");
+            }
+        }
+    }
+    
+    private static Geometry2D create2DGeometry(String type, Scanner scanner) {
+        switch (type.toLowerCase()) {
+            case "circle":
+                System.out.println("Enter radius: ");
+                double radius = scanner.nextDouble();
+                scanner.nextLine(); // consume newline
+                return new Circle(radius);
+
+            case "rectangle":
+                System.out.println("Enter length and width (one at a time): ");
+                double length = scanner.nextDouble();
+                double width = scanner.nextDouble();
+                scanner.nextLine(); // consume newline
+                return new Rectangle(length, width);
+
+            case "triangle":
+                System.out.println("Enter base, height, and side lengths (one at a time): ");
+                double base = scanner.nextDouble();
+                double height = scanner.nextDouble();
+                double x = scanner.nextDouble();
+                double y = scanner.nextDouble();
+                scanner.nextLine(); // consume newline
+                return new Triangle(base, height, x, y);
+
+            default:
+                System.out.println("Invalid geometry type.");
+                return null;
+        }
+    }
+    private static Geometry3D create3DGeometry(String type, Scanner scanner) {
+        switch (type.toLowerCase()) {
+            case "rectangularprism":
+                System.out.println("Enter length, width, and height (one at a time): ");
+                double length = scanner.nextDouble();
+                double width = scanner.nextDouble();
+                double height = scanner.nextDouble();
+                scanner.nextLine(); // consume newline
+                return new RectangularPrism(length, width, height);
+
+            case "sphere":
+                System.out.println("Enter radius: ");
+                double radius = scanner.nextDouble();
+                scanner.nextLine(); // consume newline
+                return new Sphere(radius);
+
+            case "triangularprism":
+                System.out.println("Enter base, height, side lengths, and prism length (one at a time): ");
+                double base = scanner.nextDouble();
+                double prismHeight = scanner.nextDouble();
+                double side1 = scanner.nextDouble();
+                double side2 = scanner.nextDouble();
+                double side3 = scanner.nextDouble();
+                double prismLength = scanner.nextDouble();
+                scanner.nextLine(); // consume newline
+                return new TriangularPrism(prismLength, base, prismHeight, side1, side2, side3);
+
+            default:
+                System.out.println("Invalid geometry type.");
+                return null;
+        }
+    }
+    private static <T> boolean removeGeometry(LinkedList<T> list, String type, Scanner scanner) {
+        System.out.println("Enter identifying parameters for the geometry:");
+        T target = createGeometryFromType(type, scanner); // Common utility method
+        if (target != null) {
+            return list.remove(target);
+        }
+        return false;
+    }
+
+    private static <T> boolean findGeometry(LinkedList<T> list, String type, Scanner scanner) {
+        System.out.println("Enter identifying parameters for the geometry:");
+        T target = createGeometryFromType(type, scanner); // Common utility method
+        if (target != null && list.contains(target)) {
+            System.out.println("Geometry found: " + target);
+            return true;
+        }
+        return false;
+    }
+
+    private static <T> T createGeometryFromType(String type, Scanner scanner) {
+        // Check if the type corresponds to a 2D geometry
+        if (type.equalsIgnoreCase("circle") || 
+            type.equalsIgnoreCase("rectangle") || 
+            type.equalsIgnoreCase("triangle")) {
+            return (T) create2DGeometry(type, scanner);
+        }
+        // Check if the type corresponds to a 3D geometry
+        else if (type.equalsIgnoreCase("rectangularprism") || 
+                 type.equalsIgnoreCase("sphere") || 
+                 type.equalsIgnoreCase("triangularprism")) {
+            return (T) create3DGeometry(type, scanner);
+        }
+        System.out.println("Invalid geometry type.");
+        return null;
+    }
+
+
+}

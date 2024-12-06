@@ -1,0 +1,33 @@
+package geometry;
+
+private static Geometry3D create3DGeometry(String type, Scanner scanner) {
+    switch (type) {
+        case "rectangularprism":
+            System.out.println("Enter length, width, and height: ");
+            double l = scanner.nextDouble();
+            double w = scanner.nextDouble();
+            double h = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+            return new RectangularPrism(l, w, h);
+
+        case "sphere":
+            System.out.println("Enter radius: ");
+            double r = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+            return new Sphere(r);
+
+        case "triangularprism":
+            System.out.println("Enter base, height, side lengths, and length: ");
+            double base = scanner.nextDouble();
+            double height = scanner.nextDouble();
+            double s1 = scanner.nextDouble();
+            double s2 = scanner.nextDouble();
+            double s3 = scanner.nextDouble();
+            double len = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+            return new TriangularPrism(len, base, height, s1, s2, s3);
+
+        default:
+            return null;
+    }
+}
