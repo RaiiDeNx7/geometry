@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="RectangularPrismTest" project="geometry" tests="3" started="3" failures="0" errors="0" ignored="0">
-  <testsuite name="geometry.RectangularPrismTest" time="0.0" displayname="RectangularPrismTest" uniqueid="[engine:junit-jupiter]/[class:geometry.RectangularPrismTest]">
-    <testcase name="should_have_volume_one" classname="geometry.RectangularPrismTest" time="0.0" displayname="should_have_volume_one()" uniqueid="[engine:junit-jupiter]/[class:geometry.RectangularPrismTest]/[method:should_have_volume_one()]"/>
-    <testcase name="should_create_cube" classname="geometry.RectangularPrismTest" time="0.0" displayname="should_create_cube()" uniqueid="[engine:junit-jupiter]/[class:geometry.RectangularPrismTest]/[method:should_create_cube()]"/>
-    <testcase name="should_calculate_surface_area" classname="geometry.RectangularPrismTest" time="0.0" displayname="should_calculate_surface_area()" uniqueid="[engine:junit-jupiter]/[class:geometry.RectangularPrismTest]/[method:should_calculate_surface_area()]"/>
-  </testsuite>
-</testrun>
